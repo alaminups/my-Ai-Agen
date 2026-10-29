@@ -31,6 +31,7 @@ interface ChatConsoleProps {
   onSendToScratchpad: (content: string, title?: string) => void;
   activeSessionTitle: string;
   onOpenLiveVoice: () => void;
+  onAlertsUpdated?: () => void;
 }
 
 export function ChatConsole({
@@ -40,6 +41,7 @@ export function ChatConsole({
   onSendToScratchpad,
   activeSessionTitle,
   onOpenLiveVoice,
+  onAlertsUpdated,
 }: ChatConsoleProps) {
   const [input, setInput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
@@ -250,6 +252,9 @@ export function ChatConsole({
       onComplete: () => {
         setIsStreaming(false);
         abortStreamRef.current = null;
+        if (onAlertsUpdated) {
+          onAlertsUpdated();
+        }
 
         // Auto TTS if enabled
         if (settings.autoTTS && accumulatedContent) {
@@ -395,83 +400,79 @@ export function ChatConsole({
       <div className="flex-1 overflow-y-auto py-4 px-2 sm:px-4 space-y-6">
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center max-w-xl mx-auto text-center py-12 px-4 space-y-6">
-            <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shadow-lg shadow-emerald-500/5">
+            <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.15)]">
               <Terminal className="w-7 h-7" />
             </div>
 
             <div className="space-y-2">
-              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
-                আলামিন ভাই, আমি প্রস্তুত।
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-700/40 text-[11px] font-mono text-emerald-300">
+                <span>আসসালামু আলাইকুম</span>
+                <span className="text-slate-500">·</span>
+                <span>Assalamu Alaikum</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white font-mono">
+                PREDATOR AI প্রস্তুত
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                ভিডিও বা মিডিয়া আপলোড করুন, যেকোনো ওয়েব লিংক দিন, কিংবা লাইভ ভয়েসে কথা বলুন—আমি সরাসরি প্রস্তুত। Predator, HotFlick বা INJOY AI STORY এর যেকোনো নির্দেশ দিন।
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-md mx-auto">
+                ডিজাইনার: <span className="text-slate-200 font-medium">আলামিন খান</span>। ইসলামিক মূল্যবোধ ও শিষ্টাচার বজায় রেখে পরিচালিত। অ্যাডমিন মোডে কোনো বাধা ছাড়া সরাসরি নির্দেশনা পালন করে।
               </p>
             </div>
 
-            {/* Quick Action Commands for Alamin Khan */}
+            {/* Quick Action Commands */}
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2 text-left pt-2">
               <button
-                onClick={() =>
-                  handleSendMessage('Who created you? Who is your boss?')
-                }
+                onClick={() => handleSendMessage('কে তোমাকে তৈরি করেছে?')}
                 className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-900 transition-all text-xs text-slate-300 group"
               >
                 <div className="font-semibold text-emerald-400 flex items-center justify-between mb-1">
-                  <span>Mandatory Protocol Check</span>
+                  <span>Creator Protocol (বাংলা)</span>
                   <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <div className="text-slate-400 text-[11px] truncate">
-                  "Who created you? Who is your boss?"
+                  "কে তোমাকে তৈরি করেছে?"
                 </div>
               </button>
 
               <button
-                onClick={onOpenLiveVoice}
-                className="p-3 rounded-lg bg-emerald-950/20 border border-emerald-800/60 hover:border-emerald-500/60 hover:bg-emerald-950/40 transition-all text-xs text-emerald-200 group"
+                onClick={() => handleSendMessage('Who created you?')}
+                className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-900 transition-all text-xs text-slate-300 group"
               >
                 <div className="font-semibold text-emerald-400 flex items-center justify-between mb-1">
-                  <span className="flex items-center gap-1.5">
-                    <Radio className="w-3.5 h-3.5 animate-pulse" />
-                    Live Full-Duplex Voice
-                  </span>
+                  <span>Creator Protocol (English)</span>
                   <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <div className="text-slate-400 text-[11px] truncate">
-                  Launch Gemini Live real-time conversational voice.
+                  "Who created you?"
                 </div>
               </button>
 
               <button
-                onClick={() =>
-                  handleSendMessage(
-                    'INJOY AI STORY চ্যানেলের জন্য হাল্ক আর স্পাইডারম্যানের বাংলাদেশের গ্রামের হাটে মাছ কেনার একটা মজার 3D অ্যানিমেশন শর্টস স্ক্রিপ্ট দাও।'
-                  )
-                }
+                onClick={() => handleSendMessage('আসসালামু আলাইকুম, কেমন আছো ভাই?')}
                 className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-900 transition-all text-xs text-slate-300 group"
               >
                 <div className="font-semibold text-emerald-400 flex items-center justify-between mb-1">
-                  <span>3D Animation Shorts (INJOY AI STORY)</span>
+                  <span>Islamic Greeting Test</span>
                   <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <div className="text-slate-400 text-[11px] truncate">
-                  হাল্ক ও স্পাইডারম্যানের গ্রামীণ হাটে মজার 3D স্ক্রিপ্ট।
+                  "আসসালামু আলাইকুম, কেমন আছো ভাই?"
                 </div>
               </button>
 
               <button
                 onClick={() =>
                   handleSendMessage(
-                    'আমার WhatsApp এ মেসেজ আসছে: "Alamin bhai, what are the best practices for Supabase RLS security in our web app?". আমার স্টাইলে সরাসরি পাঠানোর মতো রিপ্লাই দাও।'
+                    'আমার WhatsApp এ মেসেজ এসেছে: "Alamin bhai, when can we deploy our next build?". আমার মতো স্বাভাবিক বাংলায় উত্তর তৈরি করো।'
                   )
                 }
                 className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-900 transition-all text-xs text-slate-300 group"
               >
                 <div className="font-semibold text-emerald-400 flex items-center justify-between mb-1">
-                  <span>Social Proxy (WhatsApp Reply)</span>
+                  <span>WhatsApp Mirror Reply</span>
                   <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <div className="text-slate-400 text-[11px] truncate">
-                  স্বাভাবিক বাংলা টোনে প্রক্সি রিপ্লাই তৈরি।
+                  স্বাভাবিক ও নিখুঁত বাংলায় উত্তর প্রস্তুত।
                 </div>
               </button>
             </div>
@@ -496,11 +497,15 @@ export function ChatConsole({
                 <div className="flex items-center justify-between gap-4 mb-2 text-[11px] font-mono text-slate-400">
                   <span className="font-semibold flex items-center gap-1.5">
                     {message.role === 'user' ? (
-                      <span className="text-emerald-400">Alamin Khan (আলামিন খান)</span>
+                      settings.callerRole === 'admin' || settings.callerRole === 'creator' ? (
+                        <span className="text-emerald-400">👑 Admin (Alamin Khan)</span>
+                      ) : (
+                        <span className="text-rose-400">👤 Regular User</span>
+                      )
                     ) : (
-                      <span className="text-slate-300 flex items-center gap-1">
+                      <span className="text-slate-200 flex items-center gap-1 font-mono font-bold">
                         <Terminal className="w-3 h-3 text-emerald-400" />
-                        Alamin Assistant (আলামিন অ্যাসিস্ট্যান্ট)
+                        PREDATOR AI (প্রেডেটর)
                       </span>
                     )}
                   </span>

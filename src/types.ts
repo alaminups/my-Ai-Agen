@@ -45,7 +45,15 @@ export interface ScratchpadNote {
 
 export type ToneMode = 'auto' | 'casual_bangla' | 'formal_bangla' | 'concise_english' | 'code_first';
 
-export type CallerRole = 'creator' | 'third_party';
+export type CallerRole = 'admin' | 'regular' | 'creator' | 'third_party';
+
+export interface SecurityAlert {
+  id: string;
+  timestamp: number;
+  userPrompt: string;
+  reason: string;
+  role: string;
+}
 
 export interface CreatorSettings {
   creatorName: string;

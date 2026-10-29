@@ -1,4 +1,4 @@
-import { Message, ToneMode, CallerRole, MediaAttachment, ParsedLinkResult } from '../types';
+import { Message, ToneMode, CallerRole, MediaAttachment, ParsedLinkResult, SecurityAlert } from '../types';
 
 export interface ChatStreamOptions {
   messages: Array<{ role: 'user' | 'assistant'; content: string; media?: MediaAttachment }>;
@@ -138,5 +138,24 @@ export async function fetchServerStatus() {
     return await res.json();
   } catch {
     return { status: 'offline', creator: 'Alamin Khan (আলামিন খান)' };
+  }
+}
+
+export async function fetchSecurityAlerts(): Promise<SecurityAlert[]> {
+  try {
+    const res = await fetch('/api/admin/alerts');
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.alerts || [];
+  } catch {
+    return [];
+  }
+}
+
+export async function clearSecurityAlerts(): Promise<void> {
+  try {
+    await fetch('/api/admin/alerts/clear', { method: 'POST' });
+  } catch (err) {
+    console.error('Failed to clear alerts:', err);
   }
 }
