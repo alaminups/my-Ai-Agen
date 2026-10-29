@@ -45,9 +45,8 @@ export default async function handler(req, res) {
     // সিস্টেম প্রম্পট বা নির্দেশিকা সেট করা
     const systemInstruction = body.customDirectives || "তোমার নাম Predator। তুমি একটি অত্যাধুনিক এআই। তোমাকে আলামিন খান তৈরি করেছেন।";
     
-    // লেটেস্ট এবং দ্রুততম মডেল ব্যবহার করা হচ্ছে
-    const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-flash",
+  const model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-flash", // <--- ঠিক এই ৫০ নম্বর লাইনটি বদলাতে হবে
         systemInstruction: systemInstruction 
     });
 
