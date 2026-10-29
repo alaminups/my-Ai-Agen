@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #070b12;
+    color: #e2e8f0;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+/* Markdown styling inside assistant responses */
+.prose-assistant {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: #e2e8f0;
+}
+
+.prose-assistant p {
+  margin-bottom: 0.75rem;
+}
+
+.prose-assistant p:last-child {
+  margin-bottom: 0;
+}
+
+.prose-assistant ul, .prose-assistant ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-left: 1.25rem;
+}
+
+.prose-assistant ul {
+  list-style-type: disc;
+}
+
+.prose-assistant ol {
+  list-style-type: decimal;
+}
+
+.prose-assistant li {
+  margin-bottom: 0.25rem;
+}
+
+.prose-assistant pre {
+  background: #04070d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.5rem;
+  padding: 0.875rem 1rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  margin: 0.75rem 0;
+}
+
+.prose-assistant code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.25rem;
+  color: #38bdf8;
+}
+
+.prose-assistant pre code {
+  background: transparent;
+  padding: 0;
+  color: #e2e8f0;
+  display: block;
+}
+
+.prose-assistant h1, .prose-assistant h2, .prose-assistant h3, .prose-assistant h4 {
+  font-weight: 600;
+  color: #f8fafc;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-assistant h1 { font-size: 1.25rem; }
+.prose-assistant h2 { font-size: 1.125rem; }
+.prose-assistant h3 { font-size: 1rem; }
+
+.prose-assistant blockquote {
+  border-left: 3px solid #10b981;
+  padding-left: 0.75rem;
+  color: #94a3b8;
+  font-style: italic;
+  margin: 0.75rem 0;
+}
+
+.prose-assistant table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75rem 0;
+  font-size: 0.875rem;
+}
+
+.prose-assistant th, .prose-assistant td {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 0.75rem;
+  text-align: left;
+}
+
+.prose-assistant th {
+  background: rgba(255, 255, 255, 0.04);
+  font-weight: 600;
+}

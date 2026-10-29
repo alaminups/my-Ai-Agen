@@ -1,0 +1,6 @@
+{
+  "name": "Maru's Personal AI Assistant",
+  "description": "Exclusive, ultra-adaptive personal AI assistant designed solely for creator Maru (মারু) with real-time tone mirroring, bilingual Bangla/English fluency, voice TTS, and command console.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
