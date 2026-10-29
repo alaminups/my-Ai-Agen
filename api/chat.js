@@ -1,14 +1,12 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export default async function handler(req, res) {
-  // CORS Setup 
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  // ফ্রন্টএন্ডের স্ট্রিমিং সাপোর্ট করার জন্য হেডার
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
@@ -35,13 +33,12 @@ export default async function handler(req, res) {
         return res.end();
     }
     
-    // API কানেকশন
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const systemInstruction = body.customDirectives || "তোমার নাম Predator। তুমি একটি অত্যাধুনিক এআই। তোমাকে আলামিন খান তৈরি করেছেন।";
     
-    // --- এখানে gemini-1.5-pro মডেলটি সেট করে দেওয়া হয়েছে ---
+    // স্টেবল gemini-pro মডেল ব্যবহার করা হচ্ছে যা কোনো 404 এরর দেবে না
     const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-pro", 
+        model: "gemini-pro", 
         systemInstruction: systemInstruction 
     });
 
