@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         finalUserMessage = body.message;
     }
 
-    // --- স্মার্ট ডিবাগ মোড ---
+    // স্মার্ট ডিবাগ মোড
     if (!finalUserMessage || finalUserMessage.trim() === "") {
         const debugMsg = "আমি মেসেজটি ধরতে পারিনি। সার্ভারে যে ডাটা এসেছে: " + JSON.stringify(body).substring(0, 150);
         res.write(`data: ${JSON.stringify({ text: debugMsg })}\n\n`);
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
         return res.end();
     }
     
-    // --- Gemini API কানেকশন ---
+    // Gemini API কানেকশন
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const systemInstruction = body.customDirectives || "তোমার নাম Predator। তুমি একটি অত্যাধুনিক এআই।";
     
