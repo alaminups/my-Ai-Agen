@@ -36,11 +36,11 @@ export default async function handler(req, res) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const systemInstruction = body.customDirectives || "তোমার নাম Predator। তুমি একটি অত্যাধুনিক এআই। তোমাকে আলামিন খান তৈরি করেছেন।";
     
-    // একেবারে সরাসরি এবং ইউনিভার্সাল এপিআই মডেল কল
+    // একদম স্ট্যান্ডার্ড এবং ক্লিন মডেল ইনিশিয়ালাইজেশন
     const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-flash",
+        model: "gemini-1.5-flash", 
         systemInstruction: systemInstruction 
-    }, { apiVersion: 'v1' });
+    });
 
     const streamingResult = await model.generateContentStream(finalUserMessage);
     
